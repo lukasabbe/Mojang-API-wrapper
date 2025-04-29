@@ -1,3 +1,3 @@
-export { getProfileFromUUID, getProfileFromUsername, getProfilesFromUsernames, getSkinData } from "./MojangAPI.js";
+export { getProfileFromUUID, getProfileFromUsername, getProfilesFromUsernames, getSkinData, checkIfServerBlocked } from "./MojangAPI.js";
 export { MinecraftProfile } from "./Profile.js"
 export { SkinData } from "./SkinData.js"

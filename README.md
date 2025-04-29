@@ -80,6 +80,13 @@ console.log(await profile.getModel()) // NORMAL
 
 ```
 
+## Check if a server is banned
+```js
+const { checkIfServerBlocked } = require("minecraft-api-wrapper");
+
+console.log(await checkIfServerBlocked("hypixel.net")) //false
+```
+
 # Future
 
 In the future i may implement mojangs authentication services too. 

@@ -1,6 +1,8 @@
 import fetch from "node-fetch"
 import { MinecraftProfile } from "./Profile";
 import { SkinData } from "./SkinData";
+import crypto from "crypto";
+
 
 const MOJANG_API_URI = "https://api.mojang.com";
 
@@ -86,4 +88,50 @@ const getSkinData = async (UUID: string) : Promise<SkinData | null> => {
 }
 
 
-export { getProfileFromUUID, getProfileFromUsername, getProfilesFromUsernames, getSkinData }
+/**
+ * Checks if the server is blocked by Mojang
+ * @param serverIp - Server IP
+ */
+const checkIfServerBlocked = async (serverIp: string) : Promise<boolean> => {
+    const data = await fetch(`https://sessionserver.mojang.com/blockedservers`);
+    if(!data.ok) return false;
+    const textData = await data.text();
+
+    const lines = textData.split("\n");
+
+    let shasum = crypto.createHash('sha1');
+
+    shasum.update(serverIp);
+    let hash = shasum.digest('hex');
+    for(const line of lines){
+        if(line == hash) return true;
+    }
+
+    serverIp = "*."+serverIp;
+
+    while(serverIp.length > 0){
+        shasum = crypto.createHash('sha1');
+        shasum.update(serverIp);
+        let hash = shasum.digest('hex');
+        for(const line of lines){
+            if(line == hash) return true;
+        }
+        serverIp = truncateIp(serverIp);
+    }
+    return false;
+}
+
+const truncateIp = (ip: string) : string => {
+    const splitedIp = ip.split(".");
+    if(splitedIp.length <= 2) return "";
+    let tempIp = "*.";
+    for(let i = 2; i < splitedIp.length; i++)
+        if(i == splitedIp.length - 1)
+            tempIp += splitedIp[i];
+        else
+            tempIp += splitedIp[i] + ".";
+    return tempIp;
+}
+
+
+export { getProfileFromUUID, getProfileFromUsername, getProfilesFromUsernames, getSkinData, checkIfServerBlocked }
