@@ -7,5 +7,7 @@ jobs:
             - uses: actions/checkout@v4
             - name: install modules
               run: npm install
+            - name: build from ts
+              run: npx tsc
             - name: run tests
               run: npm test
