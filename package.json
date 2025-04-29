@@ -1,5 +1,5 @@
 {
-  "name": "mojangapi",
+  "name": "minecraft-api-wrapper",
   "version": "1.0.0",
   "description": "Mojang API wrapper",
   "main": "dist/index.js",

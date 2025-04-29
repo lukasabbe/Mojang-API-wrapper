@@ -6,7 +6,7 @@ Not an official Minecraft API wrapper, I am not associated with Mojang or Micros
 
 # Installation
 
-`npm install mojangapi`
+`npm install minecraft-api-wrapper`
 
 
 # Usage
@@ -14,7 +14,7 @@ Not an official Minecraft API wrapper, I am not associated with Mojang or Micros
 ## Get UUID from username
 
 ```js
-const { getProfileFromUsername } = require("mojangapi");
+const { getProfileFromUsername } = require("minecraft-api-wrapper");
 
 const profile = await getProfileFromUsername("jeb_");
 
@@ -30,7 +30,7 @@ getProfileFromUsername("jeb_").then(profile2 => {
 ## Get username from UUID
 
 ```js
-const { getProfileFromUUID } = require("mojangapi");
+const { getProfileFromUUID } = require("minecraft-api-wrapper");
 
 const profile = await getProfileFromUUID("853c80ef3c3749fdaa49938b674adae6");
 
@@ -46,7 +46,7 @@ getProfileFromUUID("853c80ef3c3749fdaa49938b674adae6").then(profile2 => {
 ## Get multiple UUID:s from usernames
 
 ```js
-const { getProfilesFromUsernames } = require("mojangapi");
+const { getProfilesFromUsernames } = require("minecraft-api-wrapper");
 
 const names = ["lukasabbe", "jeb_"]
 
@@ -61,7 +61,7 @@ for(const profile of profiles){
 ## Get skin data, like skin URL or cape URL
 
 ```js
-const { getSkinData, getProfileFromUsername } = require("mojangapi");
+const { getSkinData, getProfileFromUsername } = require("minecraft-api-wrapper");
 
 //Uuid of the player you want the skin from
 const skindata = await getSkinData("853c80ef3c3749fdaa49938b674adae6");
