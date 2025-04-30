@@ -1,15 +1,18 @@
 import { getSkinData } from "./MojangAPI";
+import { getOptfineCapeUrl } from "./OptifineAPI";
 import { SkinData } from "./SkinData";
 
 export class MinecraftProfile {
     MinecraftUUID: string;
     MinecraftUsername: string;
     private MinecraftSkinData : SkinData | null;
+    private OptifineCapeUrl: string | null;
 
     constructor(MinecraftUUID: string, MinecraftUsername: string){
         this.MinecraftUUID = MinecraftUUID;
         this.MinecraftUsername = MinecraftUsername;
         this.MinecraftSkinData = null;
+        this.OptifineCapeUrl = "";
     }
 
     /**
@@ -19,6 +22,9 @@ export class MinecraftProfile {
         return this.MinecraftUUID;
     }
 
+    /**
+     * Returns players UUID in a full format
+     */
     getFullUUID(){
         return `${this.MinecraftUUID.slice(0,8)}-${this.MinecraftUUID.slice(8,12)}-${this.MinecraftUUID.slice(12,16)}-${this.MinecraftUUID.slice(16,20)}-${this.MinecraftUUID.slice(20)}`
     }
@@ -55,6 +61,14 @@ export class MinecraftProfile {
     async getModel(){
         if(this.MinecraftSkinData == null) await this.getSkinData();
         return this.MinecraftSkinData!.model;
+    }
+
+    /**
+     * Gets Optifine cape url for Minecraft profile
+     */
+    async getOptifineCapeUrl(){
+        if(this.OptifineCapeUrl == "") this.OptifineCapeUrl = await getOptfineCapeUrl(this.MinecraftUsername);
+        return this.OptifineCapeUrl;
     }
 
     private async getSkinData(){
