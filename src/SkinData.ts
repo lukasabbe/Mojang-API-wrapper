@@ -4,7 +4,7 @@ export class SkinData {
     username: string;
     skinUrl: string | null;
     capeUrl: string | null;
-    model: "NORMAL" | "SLIM";
+    model: "CLASSIC" | "SLIM";
     skinJsonData: SkinJsonData;
 
     constructor(skinJsonData: SkinJsonData){
@@ -18,10 +18,10 @@ export class SkinData {
 
         if(skinJsonData.textures.SKIN){
             this.skinUrl = skinJsonData.textures.SKIN.url;
-            this.model = (skinJsonData.textures.SKIN.metadata) ? "SLIM" : "NORMAL"
+            this.model = (skinJsonData.textures.SKIN.metadata) ? "SLIM" : "CLASSIC"
         } else {
             this.skinUrl = null;
-            this.model = "NORMAL";
+            this.model = "CLASSIC";
         }
     }
 }
