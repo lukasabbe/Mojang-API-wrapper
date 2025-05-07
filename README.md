@@ -76,7 +76,7 @@ console.log(skindata.model) // NORMAL
 const profile = getProfileFromUsername("jeb_");
 console.log(await profile.getSkinUrl()) // http://textures.minecraft.net/texture/7fd9ba42a7c81eeea22f1524271ae85a8e045ce0af5a6ae16c6406ae917e68b5
 console.log(await profile.getCapeUrl()) // http://textures.minecraft.net/texture/9e507afc56359978a3eb3e32367042b853cddd0995d17d0da995662913fb00f7
-console.log(await profile.getModel()) // NORMAL
+console.log(await profile.getModel()) // CLASSIC
 
 ```
 
