@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import FormData from "form-data";
+import crypto from "crypto";
 
 export class MojangAuthProfile {
     private clientId: string;
@@ -328,7 +329,29 @@ export class MojangAuthProfile {
         }
         return true;
     }
-
+    /**
+     * Removes selected skin from the authenticated user
+     */
+    async resetSkin(): Promise<boolean> {
+        const data = await this.fetchData("https://api.minecraftservices.com/minecraft/profile/skins/active", "DELETE");
+        return data !== null;
+    }
+    /**
+     * Deactivates the cape of the authenticated user
+     */
+    async deactivateCape(): Promise<boolean> {
+        const data = await this.fetchData("https://api.minecraftservices.com/minecraft/profile/capes/active", "DELETE");
+        return data !== null;
+    }
+    /**
+     * Activates the cape of the authenticated user with the given URL
+     */
+    async activateCape(capeId: string): Promise<boolean> {
+        const data = await this.fetchData("https://api.minecraftservices.com/minecraft/profile/capes/active", "PUT", {
+            capeId: capeId
+        });
+        return data !== null;
+    }
 }
 
 interface Profile {

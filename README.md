@@ -89,11 +89,11 @@ console.log(await checkIfServerBlocked("hypixel.net")) //false
 
 # Mojang Authentication API
 
-Before you begin using this API you need to get yourself an Azure Application so you can create an OAuth2 application.
+Before you begin using this part of Mojangs Auth API you need to get yourself an Entra Application.
 
 **You need a basic understing of OAuth2 before you start!**
 
-If you don't have one here is a guide on how you can make yourself an application OR you can follow [Microsofts guide](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)
+If you don't have a Entra Application, I have made a guide bellow OR you can follow [Microsofts guide](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)
 
 1. Create an free account on [Azure](https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account?icid=azurefreeaccount&WT.mc_id=A261C142F)
 2. After that head to https://entra.microsoft.com/
@@ -142,4 +142,18 @@ const success = await authProfile.authenticate();
 if(!success) return;
 
 console.log(await authProfile.getName()) // Gets the name for the user that logged in. 
+```
+The same things that exists when using the open api exists on the Auth API
+
+```js
+const minecraftAuthToken = "";
+const authProfile = new MojangAuthProfile(minecraftAuthToken);
+
+console.log(authProfile.getName()) // Gets the name for the authenticated user
+console.log(authProfile.getUUID()) // Gets the UUId for the authenticated user
+console.log(authProfile.getActiveSkin()) // Gets the active skin for the authenticated user, this object has url and model
+console.log(authProfile.getActiveCape()) //Gets the active cape for the authenticated user, this object has url, Id and name
+console.log(authProfile.getCapes()) // Gets all the profiles capes in a list
+
+
 ```
