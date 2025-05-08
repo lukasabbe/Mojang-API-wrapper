@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import FormData from "form-data";
 
 export class MojangAuthProfile {
     private clientId: string;
@@ -150,15 +151,27 @@ export class MojangAuthProfile {
         if (!this.authenticated) {
             throw new Error("Not authenticated");
         }
+        let fetchData = {};
+        if(body){
+            fetchData = {
+                method: method,
+                headers: {
+                    "Authorization": "Bearer " + this.mojangAccessToken,
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            }
+        }else{
+            fetchData = {
+                method: method,
+                headers: {
+                    "Authorization": "Bearer " + this.mojangAccessToken,
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            }
 
-        const fetchData = {
-            method: method,
-            headers: {
-                "Authorization": "Bearer " + this.mojangAccessToken,
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: body ? JSON.stringify(body) : JSON.stringify({})
         }
 
         const response = await fetch(url, fetchData);
@@ -167,7 +180,12 @@ export class MojangAuthProfile {
         return data;
     }
     private async getProfileData(): Promise<void> {
-        return await this.fetchData("https://api.minecraftservices.com/minecraft/profile");
+        this.profile = await this.fetchData("https://api.minecraftservices.com/minecraft/profile");
+    }
+    async checkOwnership(): Promise<boolean> {
+        const ownerShipData = await this.fetchData("https://api.minecraftservices.com/entitlements/license");
+        if(!ownerShipData) return false;
+        return ownerShipData.items.findIndex((item: any) => item.name === "product_minecraft" || item.name === "game_minecraft") !== -1;
     }
     /**
      * Gets name of authenticated user
@@ -259,22 +277,58 @@ export class MojangAuthProfile {
         return data.nameChangeAllowed;
     }
     /**
+     * Last time user changed their name, if they have not changed it, it will return null
+     */
+    async lastNameChange(): Promise<string | null> {
+        const data = await this.fetchData("https://api.minecraftservices.com/minecraft/profile/namechange");
+        return data.changedAt ? data.changedAt : null;
+    }
+    /**
      * Checks if the name is available
      */
     async checkNameAvailability(name: string): Promise<"DUPLICATE" | "AVAILABLE" | "NOT_ALLOWED"> {
         const data = await this.fetchData(`https://api.minecraftservices.com/minecraft/profile/name/${name}/available`);
-        return data.nameAvailable;
+        return data.status;
     }
     /**
-     * Changes the skin of the authenticated user
+     * Changes the skin of the authenticated user with the given URL
      */
-    async changeSkin(urlToSkin: string, model: "classic" | "slim"): Promise<boolean> {
-        const data = await this.fetchData("https://api.minecraftservices.com/minecraft/profile/skins", "POST", {
-            url: urlToSkin,
-            variant: model
+    async changeSkin(urlToSkin: string, model: "classic" | "slim"): Promise<boolean>;
+    /**
+     * Changes the skin of the authenticated user with the given file
+     */
+    async changeSkin(file: Buffer, model: "classic" | "slim"): Promise<boolean>;
+    async changeSkin(fileOrUrl: Buffer | string, model: "classic" | "slim"): Promise<boolean> {
+
+        if(typeof fileOrUrl === "string"){
+            const data = await this.fetchData("https://api.minecraftservices.com/minecraft/profile/skins", "POST", {
+                url: fileOrUrl,
+                variant: model
+            });
+            return data !== null;
+        }
+
+        const formData = new FormData();
+        formData.append("file", fileOrUrl, {
+            filename: "skin.png",
+            contentType: "image/png"
         });
-        return data !== null;
+        formData.append("variant", model);
+        const data = await fetch("https://api.minecraftservices.com/minecraft/profile/skins", {
+            method: "POST",
+            headers: {
+                "authorization": "Bearer " + this.mojangAccessToken,
+                ...formData.getHeaders()
+            },
+            body: formData
+        });
+        if (!data.ok) {
+            console.error("Failed to upload skin");
+            return false;
+        }
+        return true;
     }
+
 }
 
 interface Profile {
