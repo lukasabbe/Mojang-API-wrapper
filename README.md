@@ -87,6 +87,73 @@ const { checkIfServerBlocked } = require("minecraft-api-wrapper");
 console.log(await checkIfServerBlocked("hypixel.net")) //false
 ```
 
-# Future
+# Mojang Authentication API
 
-In the future i may implement mojangs authentication services too. 
+Before you begin using this part of Mojangs Auth API you need to get yourself an Entra Application.
+
+**You need a basic understing of OAuth2 before you start!**
+
+If you don't have a Entra Application, I have made a guide bellow OR you can follow [Microsofts guide](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)
+
+1. Create an free account on [Azure](https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account?icid=azurefreeaccount&WT.mc_id=A261C142F)
+2. After that head to https://entra.microsoft.com/
+3. Under `Applications -> App registrations` on the left side
+4. Click `New registration` and follow the instructions on the website
+5. Under `Authentication` in your new application you can add an redirect link. I would use `localhost` for testing!
+
+After this you need to be aproved by Mojang to be able to use there auth API. You can send in a request here -> https://aka.ms/mce-reviewappid
+
+## After you have created an Entra Application
+
+First you will need an way to let your user login. Here is a basic Express localhost example:
+
+```js
+const express = require("express")
+const app = express();
+
+const client_id = "" //Client id from App page
+const redirect_uri = "http://localhost:3000/redirect" //Same as you inputed on your website. In this case we use http://localhost:3000/redirect
+
+
+app.get("/redirect", (req, res) => {
+    console.log("Code: "+ req.query.code);
+});
+app.listen(3000, () => {
+    console.log("Login Url:")
+    console.log(`https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize?client_id=${client_id}&response_type=code&redirect_uri=${encodeURI(redirect_uri)}&response_mode=query&scope=${encodeURI("XboxLive.signin")}`)
+})
+```
+
+If you login to the link that is sent in the console when you turn on the Express server an code will be printed in the console. Copy this code.
+
+Now you can input the code into the wrapper. Make sure to use **environment variables** for secrets
+
+```js
+
+const { MojangAuthProfile } = require("minecraft-api-wrapper")
+
+const clientId = ""; //Your client Id for the app
+const clientSecret = ""; //Your client secret for the app. You can also get this in Entra pannel 
+const redirectUrl = "http://localhost:3000/redirect"; // Your redirect URL
+const code = ""; // The code that came from the user in the above express example
+
+const authProfile = new MojangAuthProfile(clientId, clientSecret, redirectUrl, code);
+const success = await authProfile.authenticate();
+if(!success) return;
+
+console.log(await authProfile.getName()) // Gets the name for the user that logged in. 
+```
+The same things that exists when using the open api exists on the Auth API
+
+```js
+const minecraftAuthToken = "";
+const authProfile = new MojangAuthProfile(minecraftAuthToken);
+
+console.log(authProfile.getName()) // Gets the name for the authenticated user
+console.log(authProfile.getUUID()) // Gets the UUId for the authenticated user
+console.log(authProfile.getActiveSkin()) // Gets the active skin for the authenticated user, this object has url and model
+console.log(authProfile.getActiveCape()) //Gets the active cape for the authenticated user, this object has url, Id and name
+console.log(authProfile.getCapes()) // Gets all the profiles capes in a list
+
+
+```
