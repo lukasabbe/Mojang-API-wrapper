@@ -1,6 +1,5 @@
 import fetch from "node-fetch";
 import FormData from "form-data";
-import crypto from "crypto";
 
 export class MojangAuthProfile {
     private clientId: string;
@@ -351,6 +350,16 @@ export class MojangAuthProfile {
             capeId: capeId
         });
         return data !== null;
+    }
+
+    async toJson(): Promise<string> {
+        if(!this.profile) await this.getProfileData();
+        return JSON.stringify({
+            uuid: this.profile!.id,
+            name: this.profile!.name,
+            skins: this.profile!.skins,
+            capes: this.profile!.capes
+        });
     }
 }
 

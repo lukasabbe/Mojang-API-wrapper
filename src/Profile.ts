@@ -70,6 +70,20 @@ export class MinecraftProfile {
         if(this.OptifineCapeUrl == "") this.OptifineCapeUrl = await getOptfineCapeUrl(this.MinecraftUsername);
         return this.OptifineCapeUrl;
     }
+    /**
+     * Returns json representation of the profile
+     */
+    async toJson(){
+        return JSON.stringify({
+            uuid: this.getFullUUID(),
+            fullUuid: this.getFullUUID(),
+            name: this.getName(),
+            skinUrl: await this.getSkinUrl(),
+            capeUrl: await this.getCapeUrl(),
+            optifineCapeUrl: await this.getOptifineCapeUrl(),
+            model: await this.getModel()
+        });
+    }
 
     private async getSkinData(){
         this.MinecraftSkinData = await getSkinData(this.MinecraftUUID);
