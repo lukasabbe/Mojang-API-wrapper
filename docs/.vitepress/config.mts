@@ -23,13 +23,30 @@ export default defineConfig({
         text: 'Open API',
         items: [
           { text: 'Get Profile', link: 'openapi/profile'},
-          { text: 'Profile functions', link: 'openapi/profileFunctions'}
+          { text: 'Profile functions', link: 'openapi/profileFunctions'},
+          { text: 'Skin functions', link: 'openapi/skin'},
+          { text: 'Banned servers', link: 'openapi/bannedServers'},
+        ]
+      },
+      {
+        text: "Mojang Auth",
+        items: [
+          { text: 'Intro', link: '/authapi/intro' },
+          { text: "Authentication", link: '/authapi/authentication' },
+          { text: "authprofile", link: '/authapi/authprofile' },
+        ]
+      },
+      {
+        text: 'Tools',
+        items: [
+          { text: 'UUID tools', link: '/tools/uuidtool' },
         ]
       }
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/lukasabbe/Mojang-API-wrapper' }
+      { icon: 'github', link: 'https://github.com/lukasabbe/Mojang-API-wrapper' },
+      { icon: 'npm', link: 'https://www.npmjs.com/package/minecraft-api-wrapper' },
     ]
   }
 })

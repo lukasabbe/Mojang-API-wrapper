@@ -29,9 +29,9 @@ profile.getName(); //Gets profiles username. Example jeb_
 
 ## Get Skin and Cape from profile
 
-You will need to await this functions.
+You will need to await these functions.
 
-This is because first time you run them the wrapper will need to make request to the skin route.
+This is because first time you run them the wrapper will need to make request to get the skin data.
 
 We don't do this when we get the profile because its a wasted request if you don't need the skin data.
 
