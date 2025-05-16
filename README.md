@@ -6,6 +6,8 @@ Mojangs rate limit is 600 requests per 10 minutes. If you go over this all reque
 
 Not an official Minecraft API wrapper, I am not associated with Mojang or Microsoft.
 
+Wrapper wiki is on its way, its in WIP right now [Wrapper docs](https://wrapperdocs.lukasabbe.com/)
+
 # Installation
 
 `npm install minecraft-api-wrapper`
