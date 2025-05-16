@@ -22,7 +22,8 @@ export default defineConfig({
       {
         text: 'Open API',
         items: [
-          { text: 'Get UUID', link: 'openapi/getuuid'}
+          { text: 'Get Profile', link: 'openapi/profile'},
+          { text: 'Profile functions', link: 'openapi/profileFunctions'}
         ]
       }
     ],
