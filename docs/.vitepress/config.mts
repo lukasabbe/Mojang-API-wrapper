@@ -8,7 +8,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Docs', link: '/about/about' }
+      { text: 'Docs', link: 'about/about' }
     ],
 
     sidebar: [
@@ -22,10 +22,10 @@ export default defineConfig({
       {
         text: 'Open API',
         items: [
-          { text: 'Get Profile', link: 'openapi/profile'},
-          { text: 'Profile functions', link: 'openapi/profileFunctions'},
-          { text: 'Skin functions', link: 'openapi/skin'},
-          { text: 'Banned servers', link: 'openapi/bannedServers'},
+          { text: 'Get Profile', link: '/openapi/profile'},
+          { text: 'Profile functions', link: '/openapi/profileFunctions'},
+          { text: 'Skin functions', link: '/openapi/skin'},
+          { text: 'Banned servers', link: '/openapi/bannedServers'},
         ]
       },
       {
@@ -47,6 +47,7 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/lukasabbe/Mojang-API-wrapper' },
       { icon: 'npm', link: 'https://www.npmjs.com/package/minecraft-api-wrapper' },
+      { icon: 'discord', link: "https://discord.lukasabbe.com/"}
     ]
   }
 })
