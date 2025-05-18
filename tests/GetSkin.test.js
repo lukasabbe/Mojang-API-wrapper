@@ -1,4 +1,4 @@
-const { getSkinData, getProfileFromUsername } = require("../dist");
+const { getSkinData, getProfileFromUsername } = require("../dist/index.js");
 
 test("Test skin getter", async () =>{
     const skindata = await getSkinData("853c80ef3c3749fdaa49938b674adae6");

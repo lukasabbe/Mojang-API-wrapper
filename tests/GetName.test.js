@@ -1,4 +1,4 @@
-const { getProfileFromUUID } = require("../dist")
+const { getProfileFromUUID } = require("../dist/index.js")
 
 test("Get name from UUID", async () =>{
     const minecraftData = await getProfileFromUUID("853c80ef3c3749fdaa49938b674adae6");
