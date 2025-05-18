@@ -9,6 +9,6 @@ jobs:
             - name: install modules
               run: npm install
             - name: build from ts
-              run: npx run build
+              run: npm run build
             - name: run tests
               run: npm test
