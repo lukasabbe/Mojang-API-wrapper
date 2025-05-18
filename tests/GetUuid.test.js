@@ -1,4 +1,4 @@
-const { getProfileFromUsername, getProfilesFromUsernames } = require("../dist/index");
+const { getProfileFromUsername, getProfilesFromUsernames } = require("../dist");
 
 test("Input of jeb_ should get his uuid (853c80ef3c3749fdaa49938b674adae6)", async () => {
     const minecraftData = await getProfileFromUsername("jeb_");
