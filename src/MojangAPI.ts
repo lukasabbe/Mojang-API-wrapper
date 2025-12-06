@@ -12,6 +12,11 @@ const MOJANG_API_URI = "https://api.mojang.com";
  * @returns {Promise<MinecraftProfile | null>}
  */
 const getProfileFromUUID = async (UUID: string) : Promise<MinecraftProfile | null> => {
+
+    if(UUID.length > 32){
+        UUID = UUID.replace(/-/g, '');
+    }
+
     const data = await fetch(`${MOJANG_API_URI}/minecraft/profile/lookup/${UUID}`);
     if(!data.ok) return null;
     const jsonData = await data.json();
