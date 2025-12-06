@@ -26,6 +26,7 @@ export default defineConfig({
           { text: 'Profile functions', link: '/openapi/profileFunctions'},
           { text: 'Skin functions', link: '/openapi/skin'},
           { text: 'Banned servers', link: '/openapi/bannedServers'},
+          { text: 'Versions', link: '/openapi/versions'},
         ]
       },
       {

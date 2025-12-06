@@ -1,6 +1,6 @@
 {
   "name": "minecraft-api-wrapper",
-  "version": "1.6.6",
+  "version": "1.7.0",
   "description": "Mojang API wrapper",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
