@@ -1,6 +1,7 @@
 import { getSkinData } from "./MojangAPI";
 import { getOptfineCapeUrl } from "./OptifineAPI";
 import { SkinData } from "./SkinData";
+import { uuidToFullUuid } from "./uuidTools";
 
 export class MinecraftProfile {
     MinecraftUUID: string;
@@ -26,7 +27,7 @@ export class MinecraftProfile {
      * Returns players UUID in a full format
      */
     getFullUUID(){
-        return `${this.MinecraftUUID.slice(0,8)}-${this.MinecraftUUID.slice(8,12)}-${this.MinecraftUUID.slice(12,16)}-${this.MinecraftUUID.slice(16,20)}-${this.MinecraftUUID.slice(20)}`
+        return uuidToFullUuid(this.MinecraftUUID);
     }
     /**
      * Returns players username
