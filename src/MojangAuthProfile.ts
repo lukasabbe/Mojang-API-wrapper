@@ -84,7 +84,7 @@ export class MojangAuthProfile {
             })
         });
         if(!microsoftResponse.ok) return "";
-        const data = await microsoftResponse.json();
+        const data = await microsoftResponse.json() as any;
         return data.access_token;
     }
     private async authXboxLive(microsoftAccessToken: string): Promise<string> {
@@ -106,7 +106,7 @@ export class MojangAuthProfile {
             })
         });
         if(!xboxLiveResponse.ok) return "";
-        const data = await xboxLiveResponse.json();
+        const data = await xboxLiveResponse.json() as any;
         return data.Token;
     }
     private async authXboxLiveXsts(XboxLiveToken: string): Promise<[string, string]> {
@@ -127,7 +127,7 @@ export class MojangAuthProfile {
             })
         });
         if(!xboxLiveXstsResponse.ok) return ["",""];
-        const data = await xboxLiveXstsResponse.json();
+        const data = await xboxLiveXstsResponse.json() as any;
         return [data.Token, data.DisplayClaims.xui[0].uhs];
     }
     private async authMojang(XstsToken: string, uhs: string): Promise<string> {
@@ -143,7 +143,7 @@ export class MojangAuthProfile {
             })
         });
         if(!mojangResponse.ok) return "";
-        const data = await mojangResponse.json();
+        const data = await mojangResponse.json() as any;
         this.mojangAccessToken = data.access_token;
         return this.mojangAccessToken;
     }

@@ -19,7 +19,7 @@ const getProfileFromUUID = async (UUID: string) : Promise<MinecraftProfile | nul
 
     const data = await fetch(`${MOJANG_API_URI}/minecraft/profile/lookup/${UUID}`);
     if(!data.ok) return null;
-    const jsonData = await data.json();
+    const jsonData = await data.json() as any;
     return new MinecraftProfile(UUID, jsonData.name);
 }
 
@@ -31,7 +31,7 @@ const getProfileFromUUID = async (UUID: string) : Promise<MinecraftProfile | nul
 const getProfileFromUsername = async (username: string) : Promise<MinecraftProfile | null> => {
     const data = await fetch(`${MOJANG_API_URI}/users/profiles/minecraft/${username}`);
     if(!data.ok) return null;
-    const jsonData = await data.json();
+    const jsonData = await data.json() as any;
     return new MinecraftProfile(jsonData.id, username);
 }
 
@@ -70,7 +70,7 @@ const getProfilesFromUsernames = async (usernames: Array<string>) : Promise<Arra
             body : JSON.stringify(users)
         })
         if(!data.ok) return null;
-        const jsonData = await data.json()
+        const jsonData = await data.json() as any;
         for (const jsonProfile of jsonData){
             Profiles.push(new MinecraftProfile(jsonProfile.id, jsonProfile.name))
         }
@@ -87,7 +87,7 @@ const getProfilesFromUsernames = async (usernames: Array<string>) : Promise<Arra
 const getSkinData = async (UUID: string) : Promise<SkinData | null> => {
     const data = await fetch(`https://sessionserver.mojang.com/session/minecraft/profile/${UUID}`);
     if(!data.ok) return null;
-    const jsonData = await data.json();
+    const jsonData = await data.json() as any;
     return new SkinData(JSON.parse(atob(jsonData.properties[0].value)));
     
 }

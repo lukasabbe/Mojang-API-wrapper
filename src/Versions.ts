@@ -9,7 +9,7 @@ export const getLatestVersion = async (snapshot = false) : Promise<Version | nul
     if (!data.ok) {
         return null;
     }
-    const json = await data.json();
+    const json = await data.json() as any;
     const latest = json.latest;
     if(snapshot){
         return json.versions.find((version: Version) => version.id == latest.snapshot) || null;
@@ -27,7 +27,7 @@ export const getVersion = async (version: string) : Promise<Version | null> => {
     if (!data.ok) {
         return null;
     }
-    const json = await data.json();
+    const json = await data.json() as any;
     return json.versions.find((v: Version) => v.id == version) || null;
 }
 
@@ -39,7 +39,7 @@ export const getAllVersions = async () : Promise<Version[] | null> => {
     if (!data.ok) {
         return null;
     }
-    const json = await data.json();
+    const json = await data.json() as any;
     return json.versions || null;
 }
 
