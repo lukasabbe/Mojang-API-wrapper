@@ -1,6 +1,6 @@
 {
   "name": "minecraft-api-wrapper",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "Mojang API wrapper",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -23,9 +23,9 @@
   "author": "Lukasabbe",
   "license": "MIT",
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^9.39.2",
     "@types/node-fetch": "^3.0.2",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "globals": "^16.5.0",
     "jest": "^30.2.0",
     "tsup": "^8.5.1",

@@ -1,25 +1,23 @@
-const uuidToFullUuid = (uuid: string): string => {
-    const cleanUuid = uuid.replace(/-/g, "");
+const uuidToFullUuid = (truncatedUuid: string): string => {
+    const cleanUuid = truncatedUuid.trim();
 
-    const paddedUuid = cleanUuid.length === 31 ? "0" + cleanUuid : cleanUuid;
-    if (paddedUuid.length !== 32) {
-        throw new Error(`Invalid UUID length: ${paddedUuid.length}. Expected 32 (or 31 with missing zero).`);
+    if (!/^[0-9a-fA-F]{32}$/.test(cleanUuid)) {
+        throw new Error("Invalid truncated UUID. Expected 32 hexadecimal characters.");
     }
 
-    return `${paddedUuid.slice(0, 8)}-${paddedUuid.slice(8, 12)}-${paddedUuid.slice(12, 16)}-${paddedUuid.slice(16, 20)}-${paddedUuid.slice(20)}`;
+    return cleanUuid.replace(
+        /^([0-9a-fA-F]{8})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{4})([0-9a-fA-F]{12})$/,
+        "$1-$2-$3-$4-$5"
+    );
 };
-const truncateUuid = (uuid: string): string => {
-    const cleanUuid = uuid.replace(/-/g, "");
+const truncateUuid = (fullUuid: string): string => {
+    const truncated = fullUuid.replace(/-/g, "");
 
-    if (cleanUuid.length === 31) {
-        return "0" + cleanUuid;
+    if (!/^[0-9a-fA-F]{32}$/.test(truncated)) {
+        throw new Error("Invalid UUID format. Result was not 32 hexadecimal characters.");
     }
 
-    if (cleanUuid.length !== 32) {
-        throw new Error(`Invalid UUID length after truncation: ${cleanUuid.length}.`);
-    }
-
-    return cleanUuid;
+    return truncated;
 }
 
 export { uuidToFullUuid, truncateUuid };
