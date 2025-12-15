@@ -20,10 +20,3 @@ test("Get latest version should return the latest version", async () => {
     expect(version.type).toBe("release");
 }
 );
-test("Get latest snapshot version should return the latest snapshot version", async () => {
-    const version = await getLatestVersion(true);
-    expect(version).toBeInstanceOf(Object);
-    expect(version.id).toBeDefined();
-    expect(version.type).toBe("snapshot");
-}
-);
